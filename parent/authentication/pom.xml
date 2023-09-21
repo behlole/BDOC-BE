@@ -11,7 +11,13 @@
 
     <groupId>com.behlole</groupId>
     <artifactId>authentication</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+    </dependencies>
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
