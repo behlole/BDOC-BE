@@ -27,6 +27,7 @@ public class CMS {
     )
     private Long id;
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String content;
     @CreatedDate
     @Column(name = "createdAt", nullable = false, updatable = false)

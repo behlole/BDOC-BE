@@ -1,4 +1,16 @@
 package com.behlole.cms.mappings;
 
-public record CMSRequest(String firstName,String lastName,String email) {
+import lombok.Getter;
+@Getter
+public class CMSRequest {
+    String name;
+    String content;
+
+    public void setContent(Object content) {
+        this.content = content.toString();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -6,16 +6,19 @@ import com.behlole.cms.models.CMS;
 import com.behlole.cms.repository.CMSRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public record CMSService(CMSRepository cmsRepository) {
-    public void registerCMS(CMSRequest cmsRequest) {
+    public CMSDto registerCMS(CMSRequest cmsRequest) {
         CMS cms = CMS.builder()
-                .firstName(cmsRequest.firstName())
-                .lastName(cmsRequest.lastName())
+                .name(cmsRequest.getName())
+                .content(cmsRequest.getContent())
+                .createdAt(new Date())
                 .build();
-        cmsRepository.save(cms);
+        cmsRepository.saveAndFlush(cms);
+        return convertCMSToDto(cms);
     }
 
     public List<CMSDto> getCMS() {
@@ -27,8 +30,8 @@ public record CMSService(CMSRepository cmsRepository) {
         return CMSDto
                 .builder()
                 .id(cms.getId())
-                .firstName(cms.getFirstName())
-                .lastName(cms.getLastName())
+                .name(cms.getName())
+                .content(cms.getContent())
                 .build()
                 ;
     }

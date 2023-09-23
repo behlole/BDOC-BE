@@ -13,9 +13,8 @@ import java.util.List;
 @RequestMapping("/api/v1/cms")
 public record CMSController(CMSService cmsService) {
     @PostMapping
-    public void registerCustomer(@RequestBody CMSRequest cmsRequest) {
-        cmsService.registerCMS(cmsRequest);
-        log.info("New Customer Registration {}", cmsRequest);
+    public CMSDto registerCMS(@RequestBody CMSRequest cmsRequest) {
+        return cmsService.registerCMS(cmsRequest);
     }
 
     @GetMapping
