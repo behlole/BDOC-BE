@@ -2,6 +2,11 @@ package com.behlole.cms.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -20,7 +25,15 @@ public class CMS {
             strategy = GenerationType.SEQUENCE,
             generator = "cms_id_sequence"
     )
-    public long id;
-    public String firstName;
-    public String lastName;
+    private Long id;
+    private String name;
+    private String content;
+    private String email;
+    @CreatedDate
+    @Column(name = "createdAt", nullable = false, updatable = false)
+    private Date createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updatedAt")
+    private LocalDateTime updatedAt;
 }
