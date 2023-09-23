@@ -28,7 +28,6 @@ public class CMS {
     private Long id;
     private String name;
     private String content;
-    private String email;
     @CreatedDate
     @Column(name = "createdAt", nullable = false, updatable = false)
     private Date createdAt;
