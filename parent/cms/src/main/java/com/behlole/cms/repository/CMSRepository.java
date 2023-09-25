@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CMSRepository extends JpaRepository<CMS, Long> {
+    public CMS findCMSByName(String name);
 }

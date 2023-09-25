@@ -4,6 +4,7 @@ import com.behlole.cms.dto.CMSDto;
 import com.behlole.cms.mappings.CMSRequest;
 import com.behlole.cms.models.CMS;
 import com.behlole.cms.repository.CMSRepository;
+import jakarta.ws.rs.core.NoContentException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -34,5 +35,13 @@ public record CMSService(CMSRepository cmsRepository) {
                 .content(cms.getContent())
                 .build()
                 ;
+    }
+
+    public CMSDto getSingleCMS(String name) throws NoContentException {
+        CMS cms = cmsRepository.findCMSByName(name);
+        if (cms == null) {
+            throw new NoContentException("No Content Found");
+        }
+        return convertCMSToDto(cmsRepository.findCMSByName(name));
     }
 }
