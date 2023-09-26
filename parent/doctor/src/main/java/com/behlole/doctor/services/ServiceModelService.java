@@ -18,4 +18,15 @@ public class ServiceModelService {
     public List<ServiceDto> convertServiceListToServiceDtoList(List<ServiceModel> serviceModels) {
         return serviceModels.stream().map(this::parseServiceToServiceDto).toList();
     }
+
+    public List<ServiceModel> convertServiceListDtoToServiceModelList(List<ServiceDto> serviceDtos) {
+        return serviceDtos.stream().map(this::parseServiceDtoToServiceModel).toList();
+    }
+
+    public ServiceModel parseServiceDtoToServiceModel(ServiceDto serviceDto) {
+        ServiceModel serviceModel = new ServiceModel();
+        serviceModel.setServiceName(serviceDto.getServiceName());
+        serviceModel.setId(serviceDto.getId());
+        return serviceModel;
+    }
 }
