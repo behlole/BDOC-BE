@@ -2,8 +2,6 @@ package com.behlole.doctor.services;
 
 import com.behlole.doctor.dto.ServiceDto;
 import com.behlole.doctor.models.ServiceModel;
-import org.jvnet.hk2.annotations.Contract;
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
