@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Service {
+public class ServiceModel {
     @Id
     @GeneratedValue(
             strategy = GenerationType.AUTO

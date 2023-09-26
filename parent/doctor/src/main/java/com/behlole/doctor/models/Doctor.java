@@ -36,6 +36,6 @@ public class Doctor {
     @OneToMany(mappedBy = "doctor")
     private List<Education> educationList;
 
-    @ManyToMany(targetEntity = Service.class)
-    private List<Service> services;
+    @ManyToMany(targetEntity = ServiceModel.class)
+    private List<ServiceModel> services;
 }
