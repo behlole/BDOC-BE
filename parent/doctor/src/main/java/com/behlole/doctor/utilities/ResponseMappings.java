@@ -19,6 +19,15 @@ public class ResponseMappings {
     public ResponseEntity<Object> getSuccessMessage(Object data) {
         Map<String, Object> mappedData = new HashMap<>();
         mappedData.put("body", data);
+        mappedData.put("message", "Data successfully fetched");
+        mappedData.put("status", 200);
+        return new ResponseEntity<Object>(mappedData, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Object> getSuccessMessageWithMessage(Object data, String message) {
+        Map<String, Object> mappedData = new HashMap<>();
+        mappedData.put("body", data);
+        mappedData.put("message", message);
         mappedData.put("status", 200);
         return new ResponseEntity<Object>(mappedData, HttpStatus.OK);
     }
