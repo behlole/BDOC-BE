@@ -2,6 +2,7 @@ package com.behlole.doctor.dto;
 
 import com.behlole.doctor.models.Category;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,11 @@ public class DoctorDto {
     private String aboutMe;
     @NotBlank
     private String phoneNumber;
-    private Category categories;
+
+    @NotNull
+    private CategoryDto category;
+    @NotNull
     private List<EducationDto> educationList;
+    @NotNull
     private List<ServiceDto> services;
 }

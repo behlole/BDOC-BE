@@ -3,6 +3,7 @@ package com.behlole.doctor.services;
 import com.behlole.doctor.dto.DoctorDto;
 import com.behlole.doctor.models.Doctor;
 import com.behlole.doctor.repositories.DoctorRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Service
 public class DoctorService {
+    @Autowired
+    ModelMapper modelMapper;
     @Autowired
     DoctorRepository doctorRepository;
 
@@ -29,33 +32,10 @@ public class DoctorService {
     }
 
     private Doctor parseDoctorDtoToDoctor(DoctorDto doctorDto) {
-        Doctor doctor = new Doctor();
-        doctor.setId(doctorDto.getId());
-        doctor.setName(doctorDto.getName());
-        doctor.setEmail(doctorDto.getEmail());
-        doctor.setTitle(doctorDto.getTitle());
-        doctor.setLocation(doctorDto.getLocation());
-        doctor.setRate(doctorDto.getRate());
-        doctor.setAboutMe(doctorDto.getAboutMe());
-        doctor.setCategories(doctorDto.getCategories());
-        doctor.setEducationList(educationService.convertEducationDtoToEducationList(doctorDto.getEducationList()));
-        if (doctorDto.getServices() != null)
-            doctor.setServices(serviceModelService.convertServiceListDtoToServiceModelList(doctorDto.getServices()));
-        return doctor;
+        return modelMapper.map(doctorDto, Doctor.class);
     }
 
     private DoctorDto parseDoctorToDoctorDto(Doctor doctor) {
-        DoctorDto doctorDto = new DoctorDto();
-        doctorDto.setId(doctor.getId());
-        doctorDto.setName(doctor.getName());
-        doctorDto.setEmail(doctor.getEmail());
-        doctorDto.setTitle(doctor.getTitle());
-        doctorDto.setLocation(doctor.getLocation());
-        doctorDto.setRate(doctor.getRate());
-        doctorDto.setAboutMe(doctor.getAboutMe());
-        doctorDto.setCategories(doctor.getCategories());
-        doctorDto.setEducationList(educationService.convertEducationListToEducationDtoList(doctor.getEducationList()));
-        doctorDto.setServices(serviceModelService.convertServiceListToServiceDtoList(doctor.getServices()));
-        return doctorDto;
+        return modelMapper.map(doctor, DoctorDto.class);
     }
 }
