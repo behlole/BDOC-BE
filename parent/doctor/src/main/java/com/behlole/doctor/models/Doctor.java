@@ -30,8 +30,8 @@ public class Doctor {
     private String rate;
     private String aboutMe;
     private String phoneNumber;
-    @ManyToOne(targetEntity = Category.class, fetch = LAZY, optional = false)
-    private Category categories;
+    @ManyToMany(targetEntity = Category.class)
+    private List<Category> categories;
 
     @OneToMany(mappedBy = "doctor")
     private List<Education> educationList;

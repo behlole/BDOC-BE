@@ -34,7 +34,7 @@ public class DoctorDto {
     private String phoneNumber;
 
     @NotNull
-    private CategoryDto category;
+    private List<CategoryDto> categories;
     @NotNull
     private List<EducationDto> educationList;
     @NotNull

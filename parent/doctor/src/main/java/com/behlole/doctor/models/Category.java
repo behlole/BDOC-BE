@@ -21,6 +21,6 @@ public class Category {
     private Long id;
     private String name;
     private String iconUrl;
-    @OneToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories")
     private List<Doctor> doctors;
 }

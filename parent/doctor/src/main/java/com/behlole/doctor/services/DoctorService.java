@@ -27,8 +27,9 @@ public class DoctorService {
     }
 
     public DoctorDto createDoctor(DoctorDto doctorDto) {
-        this.doctorRepository.saveAndFlush(parseDoctorDtoToDoctor(doctorDto));
-        return doctorDto;
+        Doctor doctor = parseDoctorDtoToDoctor(doctorDto);
+        this.doctorRepository.saveAndFlush(doctor);
+        return modelMapper.map(doctor, DoctorDto.class);
     }
 
     private Doctor parseDoctorDtoToDoctor(DoctorDto doctorDto) {

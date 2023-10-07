@@ -38,14 +38,15 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<Object> createNewDoctor(@Valid @RequestBody DoctorDto doctorDto) {
+        System.out.println("Hello");
         List<EducationDto> educationDto = educationService.createEducation(doctorDto.getEducationList());
         doctorDto.setEducationList(educationDto);
 
         List<ServiceDto> serviceDtoList = serviceModelService.createService(doctorDto.getServices());
         doctorDto.setServices(serviceDtoList);
 
-        CategoryDto categoryDto = categoryService.createCategory(doctorDto.getCategory());
-        doctorDto.setCategory(categoryDto);
+        List<CategoryDto> categoryDto = categoryService.createCategories(doctorDto.getCategories());
+        doctorDto.setCategories(categoryDto);
 
         return responseMappings.getSuccessMessage(doctorService.createDoctor(doctorDto));
     }
