@@ -1,6 +1,5 @@
 package com.behlole.doctor.services;
 
-import com.behlole.doctor.dto.EducationDto;
 import com.behlole.doctor.dto.ServiceDto;
 import com.behlole.doctor.models.ServiceModel;
 import com.behlole.doctor.repositories.ServiceRepository;

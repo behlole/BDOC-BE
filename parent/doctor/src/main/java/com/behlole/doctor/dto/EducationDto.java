@@ -1,6 +1,5 @@
 package com.behlole.doctor.dto;
 
-import com.behlole.doctor.models.Doctor;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-import static jakarta.persistence.FetchType.LAZY;
-
 @Entity
 @Getter
 @Setter
