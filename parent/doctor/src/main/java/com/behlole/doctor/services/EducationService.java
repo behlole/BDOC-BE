@@ -20,7 +20,6 @@ public class EducationService {
     public EducationDto convertEducationToEducationDto(Education education) {
         return modelMapper.map(education, EducationDto.class);
     }
-
     public Education convertEducationToEducationDto(EducationDto educationDto) {
         return modelMapper.map(educationDto, Education.class);
     }
