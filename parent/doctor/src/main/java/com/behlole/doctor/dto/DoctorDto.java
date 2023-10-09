@@ -32,7 +32,6 @@ public class DoctorDto {
     private String aboutMe;
     @NotBlank
     private String phoneNumber;
-
     @NotNull
     private List<CategoryDto> categories;
     @NotNull
