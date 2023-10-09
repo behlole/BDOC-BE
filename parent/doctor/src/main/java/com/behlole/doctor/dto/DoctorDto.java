@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 public class DoctorDto {
     private Long id;
-
     @NotBlank
     private String name;
     @NotBlank
