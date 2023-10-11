@@ -31,7 +31,7 @@ public class Doctor {
     @ManyToMany(targetEntity = Category.class)
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Education> educationList;
 
     @ManyToMany(targetEntity = ServiceModel.class)

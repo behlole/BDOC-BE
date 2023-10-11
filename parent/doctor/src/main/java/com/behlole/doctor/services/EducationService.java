@@ -1,13 +1,17 @@
 package com.behlole.doctor.services;
 
+import com.behlole.doctor.dto.DoctorDto;
 import com.behlole.doctor.dto.EducationDto;
+import com.behlole.doctor.models.Doctor;
 import com.behlole.doctor.models.Education;
 import com.behlole.doctor.repositories.EducationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EducationService {
@@ -20,7 +24,8 @@ public class EducationService {
     public EducationDto convertEducationToEducationDto(Education education) {
         return modelMapper.map(education, EducationDto.class);
     }
-    public Education convertEducationToEducationDto(EducationDto educationDto) {
+
+    public Education convertEducationDTOToEducation(EducationDto educationDto) {
         return modelMapper.map(educationDto, Education.class);
     }
 
@@ -29,10 +34,38 @@ public class EducationService {
     }
 
     public List<Education> convertEducationDtoToEducationList(List<EducationDto> educationDtoList) {
-        return educationDtoList.stream().map(this::convertEducationToEducationDto).toList();
+        return educationDtoList.stream().map(this::convertEducationDTOToEducation).toList();
     }
 
     public List<EducationDto> createEducation(List<EducationDto> educationDtoList) {
+        return convertEducationListToEducationDtoList(
+                educationRepository.saveAllAndFlush(
+                        convertEducationDtoToEducationList(educationDtoList)
+                )
+        );
+    }
+
+    public EducationDto updateEducation(EducationDto educationDto, DoctorDto doctorDto) {
+        Optional<Education> education = educationRepository.findById(educationDto.getId());
+        if (education.isPresent()) {
+            Education education1 = education.get();
+            education1.setDoctor(modelMapper.map(doctorDto, Doctor.class));
+            educationRepository.save(education1);
+            return modelMapper.map(education1, EducationDto.class);
+        } else {
+            throw new EntityNotFoundException("Doctor with ID " + educationDto.getId() + " not found");
+        }
+    }
+
+    public EducationDto createSingleEducation(EducationDto educationDto) {
+        return modelMapper.map(educationRepository.saveAndFlush(convertEducationDTOToEducation(educationDto)), EducationDto.class);
+    }
+
+    public List<EducationDto> createEducation(List<EducationDto> educationDtoList, DoctorDto doctorDto) {
+        educationDtoList.stream().map(educationDto -> {
+            educationDto.setDoctor(doctorDto);
+            return educationDto;
+        });
         return convertEducationListToEducationDtoList(
                 educationRepository.saveAllAndFlush(
                         convertEducationDtoToEducationList(educationDtoList)

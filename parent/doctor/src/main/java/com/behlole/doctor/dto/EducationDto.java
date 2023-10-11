@@ -1,5 +1,6 @@
 package com.behlole.doctor.dto;
 
+import com.behlole.doctor.models.Doctor;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,10 @@ public class EducationDto {
     @NotEmpty
     @NotEmpty
     private LocalDate endDate;
+
+
+    @NotEmpty
+    private DoctorDto doctor;
 
     public void setStartDate(String startDateString) {
         startDate = LocalDate.parse(startDateString);

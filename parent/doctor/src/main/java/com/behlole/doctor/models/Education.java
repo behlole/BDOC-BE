@@ -23,6 +23,7 @@ public class Education {
     private String institution;
     private LocalDate startDate;
     private LocalDate endDate;
-    @ManyToOne(targetEntity = Doctor.class)
+    @ManyToOne
+    @JoinColumn(name = "doctor")
     private Doctor doctor;
 }

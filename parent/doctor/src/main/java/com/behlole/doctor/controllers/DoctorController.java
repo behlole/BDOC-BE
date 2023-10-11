@@ -38,9 +38,7 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<Object> createNewDoctor(@Valid @RequestBody DoctorDto doctorDto) {
-        System.out.println("Hello");
-        List<EducationDto> educationDto = educationService.createEducation(doctorDto.getEducationList());
-        doctorDto.setEducationList(educationDto);
+
 
         List<ServiceDto> serviceDtoList = serviceModelService.createService(doctorDto.getServices());
         doctorDto.setServices(serviceDtoList);
@@ -48,6 +46,13 @@ public class DoctorController {
         List<CategoryDto> categoryDto = categoryService.createCategories(doctorDto.getCategories());
         doctorDto.setCategories(categoryDto);
 
-        return responseMappings.getSuccessMessage(doctorService.createDoctor(doctorDto));
+        List<EducationDto> educationDtoList = educationService.createEducation(doctorDto.getEducationList());
+        DoctorDto savedDoctorDto = doctorService.createDoctor(doctorDto);
+
+        educationDtoList.stream().map(educationDto -> {
+            return educationService.updateEducation(educationDto, savedDoctorDto);
+        });
+
+        return responseMappings.getSuccessMessage(savedDoctorDto);
     }
 }
