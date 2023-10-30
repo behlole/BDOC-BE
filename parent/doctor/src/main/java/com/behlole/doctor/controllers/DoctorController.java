@@ -1,15 +1,14 @@
 package com.behlole.doctor.controllers;
 
-import com.behlole.doctor.dto.CategoryDto;
-import com.behlole.doctor.dto.DoctorDto;
-import com.behlole.doctor.dto.EducationDto;
-import com.behlole.doctor.dto.ServiceDto;
+import com.behlole.doctor.dto.*;
 import com.behlole.doctor.services.CategoryService;
 import com.behlole.doctor.services.DoctorService;
 import com.behlole.doctor.services.EducationService;
 import com.behlole.doctor.services.ServiceModelService;
 import com.behlole.doctor.utilities.ResponseMappings;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,8 @@ public class DoctorController {
     DoctorService doctorService;
     @Autowired
     CategoryService categoryService;
-
+    @Autowired
+    ModelMapper modelMapper;
 
     @GetMapping
     public ResponseEntity<Object> getAllDoctors() {
@@ -37,22 +37,27 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createNewDoctor(@Valid @RequestBody DoctorDto doctorDto) {
+    public ResponseEntity<Object> createNewDoctor(@Valid @RequestBody DoctorRequest doctorDto) {
 
+        /**
+         * Assign Services to Doctor
+         */
+        doctorDto.setServices(serviceModelService.createService(doctorDto.getServices()));
+        /**
+         * Assign Categories to Doctor
+         */
+        doctorDto.setCategories(categoryService.createCategories(doctorDto.getCategories()));
+        DoctorDto savedDoctorDto = doctorService.createDoctor(modelMapper.map(doctorDto, DoctorDto.class));
 
-        List<ServiceDto> serviceDtoList = serviceModelService.createService(doctorDto.getServices());
-        doctorDto.setServices(serviceDtoList);
-
-        List<CategoryDto> categoryDto = categoryService.createCategories(doctorDto.getCategories());
-        doctorDto.setCategories(categoryDto);
-
-        List<EducationDto> educationDtoList = educationService.createEducation(doctorDto.getEducationList());
-        DoctorDto savedDoctorDto = doctorService.createDoctor(doctorDto);
-
-        educationDtoList.stream().map(educationDto -> {
-            return educationService.updateEducation(educationDto, savedDoctorDto);
-        });
-
+        educationService.updateEducationDtoList(
+                doctorDto.getEducationList(), modelMapper.map(savedDoctorDto, DoctorDto.class)
+        );
+        List<EducationDto> educationDtoList = educationService.createEducation(doctorDto.getEducationList())
+                .stream()
+                .peek(educationDto -> educationDto.setDoctor(null)).toList();
+        savedDoctorDto.setEducationDtos(
+                educationDtoList
+        );
         return responseMappings.getSuccessMessage(savedDoctorDto);
     }
 }
