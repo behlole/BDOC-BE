@@ -57,6 +57,14 @@ public class EducationService {
         }
     }
 
+
+    public List<EducationDto> updateEducationDtoList(List<EducationDto> educationDtos, DoctorDto doctorDto) {
+        return educationDtos.stream().map(educationDto -> {
+            educationDto.setDoctor(doctorDto);
+            return educationDto;
+        }).toList();
+    }
+
     public EducationDto createSingleEducation(EducationDto educationDto) {
         return modelMapper.map(educationRepository.saveAndFlush(convertEducationDTOToEducation(educationDto)), EducationDto.class);
     }
