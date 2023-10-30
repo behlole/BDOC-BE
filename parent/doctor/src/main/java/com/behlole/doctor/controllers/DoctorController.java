@@ -6,7 +6,6 @@ import com.behlole.doctor.services.DoctorService;
 import com.behlole.doctor.services.EducationService;
 import com.behlole.doctor.services.ServiceModelService;
 import com.behlole.doctor.utilities.ResponseMappings;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
