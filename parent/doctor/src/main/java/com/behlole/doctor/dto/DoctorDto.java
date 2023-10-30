@@ -34,7 +34,7 @@ public class DoctorDto {
     @NotNull
     private List<CategoryDto> categories;
     @NotNull
-    private List<EducationDto> educationList;
-    @NotNull
     private List<ServiceDto> services;
+
+    private List<EducationDto> educationDtos;
 }
