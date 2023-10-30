@@ -27,9 +27,6 @@ public class EducationDto {
     @NotEmpty
     @NotEmpty
     private LocalDate endDate;
-
-
-    @NotEmpty
     private DoctorDto doctor;
 
     public void setStartDate(String startDateString) {
