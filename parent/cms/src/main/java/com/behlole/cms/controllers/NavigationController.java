@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cms/navigation")
@@ -32,7 +33,7 @@ public class NavigationController {
     @PostMapping("/update")
     ResponseEntity<Object> updateNavigation(
             @RequestBody @Valid NavigationDto navigationDto,
-            @RequestParam(name = "id") Long id) {
+            @RequestParam(name = "uuid") UUID id) {
         navigationService.deleteNavigation(id);
         return responseMappings.getSuccessMessage(navigationService.createNavigation(navigationDto));
     }

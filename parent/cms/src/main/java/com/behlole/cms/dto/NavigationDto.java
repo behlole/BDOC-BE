@@ -8,14 +8,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class NavigationDto {
-    private Long id;
+    private UUID uuid;
+    private String id;
     @NotBlank
     private String title;
-    @NotBlank
     private String subtitle;
     @NotBlank
     private String type;
@@ -23,5 +24,6 @@ public class NavigationDto {
     @NotBlank
     private String icon;
     private String link;
+    private Boolean exactMatch;
     private List<NavigationDto> children;
 }

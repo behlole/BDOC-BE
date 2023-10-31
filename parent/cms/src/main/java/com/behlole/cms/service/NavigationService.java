@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class NavigationService {
@@ -18,7 +19,7 @@ public class NavigationService {
     NavigationRepository navigationRepository;
 
     public List<NavigationDto> getNavigationList() {
-        List<Navigation> navigationList = navigationRepository.findByIsParentIsTrue();
+        List<Navigation> navigationList = navigationRepository.findByIsParent(true);
         return navigationList.stream().map(navigation -> modelMapper.map(navigation, NavigationDto.class)).toList();
     }
 
@@ -28,7 +29,7 @@ public class NavigationService {
             List<NavigationDto> savedChildren = new ArrayList<>();
 
             for (NavigationDto child : children) {
-                if (child.getId() == null) {
+                if (child.getUuid() == null) {
                     savedChildren.add(createNavigation(child));
                 } else {
                     savedChildren.add(child);
@@ -39,12 +40,13 @@ public class NavigationService {
         if (navigationDto.getIsParent() == null) {
             navigationDto.setIsParent(false);
         }
+
         Navigation navigation = navigationRepository.saveAndFlush(modelMapper.map(navigationDto, Navigation.class));
         return modelMapper.map(navigation, NavigationDto.class);
     }
 
-    public void deleteNavigation(Long id) {
-        navigationRepository.deleteById(id);
+    public void deleteNavigation(UUID id) {
+        navigationRepository.deleteByUuid(id);
     }
 
     public void deleteAllNavigations() {

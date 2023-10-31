@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -15,11 +16,14 @@ import java.util.List;
 public class Navigation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID uuid;
+
+    private String id;
     private String title;
     private String subtitle;
     private String type;
     private String icon;
+    private Boolean exactMatch;
     @Column(nullable = true)
     private Boolean isParent = false;
     @Column(nullable = true)
