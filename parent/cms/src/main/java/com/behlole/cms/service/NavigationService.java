@@ -18,7 +18,7 @@ public class NavigationService {
     NavigationRepository navigationRepository;
 
     public List<NavigationDto> getNavigationList() {
-        List<Navigation> navigationList = navigationRepository.findAll();
+        List<Navigation> navigationList = navigationRepository.findByIsParentIsTrue();
         return navigationList.stream().map(navigation -> modelMapper.map(navigation, NavigationDto.class)).toList();
     }
 

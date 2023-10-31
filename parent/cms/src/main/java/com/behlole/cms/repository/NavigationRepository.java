@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface NavigationRepository extends JpaRepository<Navigation, Long> {
-    public List<Navigation> findByChildrenIsNull();
+    public List<Navigation> findByIsParentIsTrue();
 }
