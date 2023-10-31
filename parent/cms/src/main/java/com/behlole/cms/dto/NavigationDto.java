@@ -19,6 +19,7 @@ public class NavigationDto {
     private String subtitle;
     @NotBlank
     private String type;
+    private Boolean isParent;
     @NotBlank
     private String icon;
     private String link;

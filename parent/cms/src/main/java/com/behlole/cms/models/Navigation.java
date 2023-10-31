@@ -21,6 +21,8 @@ public class Navigation {
     private String type;
     private String icon;
     @Column(nullable = true)
+    private Boolean isParent = false;
+    @Column(nullable = true)
     private String link;
     @OneToMany(cascade = CascadeType.REMOVE)
     @Column(nullable = true)

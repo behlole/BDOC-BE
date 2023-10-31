@@ -36,6 +36,9 @@ public class NavigationService {
             }
             navigationDto.setChildren(savedChildren);
         }
+        if (navigationDto.getIsParent() == null) {
+            navigationDto.setIsParent(false);
+        }
         Navigation navigation = navigationRepository.saveAndFlush(modelMapper.map(navigationDto, Navigation.class));
         return modelMapper.map(navigation, NavigationDto.class);
     }
