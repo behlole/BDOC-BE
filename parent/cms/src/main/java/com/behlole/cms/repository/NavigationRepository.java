@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface NavigationRepository extends JpaRepository<Navigation, Long> {
     public List<Navigation> findByIsParent(Boolean isParent);
 
-    public List<Navigation> deleteByUuid(UUID uuid);
+    public Navigation findByUuid(UUID uuid);
 }

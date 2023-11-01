@@ -4,6 +4,7 @@ import com.behlole.cms.dto.NavigationDto;
 import com.behlole.cms.service.NavigationService;
 import com.behlole.cms.utilities.ResponseMappings;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,18 @@ public class NavigationController {
         return responseMappings.getSuccessMessage(navigationService.createNavigation(navigationDto));
     }
 
+    @PostMapping("/bulk")
+    ResponseEntity<Object> createBulkNavigation(@RequestBody @Valid List<NavigationDto> navigationDtoList) {
+        return responseMappings.getSuccessMessage(
+                navigationDtoList
+                        .stream()
+                        .map(
+                                navigationDto ->
+                                        navigationService.createNavigation(navigationDto))
+                        .toList()
+        );
+    }
+
     @PostMapping("/update")
     ResponseEntity<Object> updateNavigation(
             @RequestBody @Valid NavigationDto navigationDto,
@@ -39,9 +52,13 @@ public class NavigationController {
     }
 
     @DeleteMapping("/delete")
-    ResponseEntity<Object> deleteNavigation() {
-        navigationService.deleteAllNavigations();
-        return responseMappings.getSuccessMessageWithoutDataAndWithoutMessage();
+    ResponseEntity<Object> deleteNavigation(@RequestParam(required = false) UUID uuid) {
+        if (uuid == null) {
+            navigationService.deleteAllNavigations();
+            return responseMappings.getSuccessMessageWithoutDataAndWithoutMessage();
+        } else {
+            navigationService.deleteNavigation(uuid);
+            return responseMappings.getSuccessMessageWithoutDataAndWithoutMessage();
+        }
     }
-
 }

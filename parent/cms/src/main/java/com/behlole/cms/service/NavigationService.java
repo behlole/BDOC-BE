@@ -46,7 +46,10 @@ public class NavigationService {
     }
 
     public void deleteNavigation(UUID id) {
-        navigationRepository.deleteByUuid(id);
+        System.out.println(id);
+        navigationRepository.delete(
+                navigationRepository.findByUuid(id)
+        );
     }
 
     public void deleteAllNavigations() {
