@@ -42,6 +42,15 @@ public class NavigationService {
         }
 
         Navigation navigation = navigationRepository.saveAndFlush(modelMapper.map(navigationDto, Navigation.class));
+        if (navigation.getChildren() != null) {
+            List<Navigation> savedChildren = new ArrayList<>();
+            navigation.getChildren().forEach(singleChildren -> {
+                singleChildren.setParentId(navigation.getUuid());
+                savedChildren.add(singleChildren);
+            });
+            navigation.setChildren(navigationRepository.saveAllAndFlush(savedChildren));
+            navigationRepository.saveAndFlush(navigation);
+        }
         return modelMapper.map(navigation, NavigationDto.class);
     }
 

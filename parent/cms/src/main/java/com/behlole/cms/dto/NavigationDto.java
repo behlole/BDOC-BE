@@ -23,4 +23,5 @@ public class NavigationDto {
     private String link;
     private Boolean exactMatch;
     private List<NavigationDto> children;
+    private UUID parentId;
 }

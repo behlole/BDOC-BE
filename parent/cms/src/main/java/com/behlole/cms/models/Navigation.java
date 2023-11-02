@@ -31,7 +31,5 @@ public class Navigation {
     @OneToMany(cascade = CascadeType.REMOVE)
     @Column(nullable = true)
     private List<Navigation> children;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Navigation navigation;
+    private UUID parentId;
 }
