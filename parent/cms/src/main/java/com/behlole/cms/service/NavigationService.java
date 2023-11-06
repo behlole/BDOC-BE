@@ -61,6 +61,7 @@ public class NavigationService {
         );
     }
 
+
     public void deleteAllNavigations() {
         navigationRepository.deleteAll();
     }

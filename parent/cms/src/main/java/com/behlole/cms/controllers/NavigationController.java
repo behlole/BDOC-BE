@@ -43,12 +43,15 @@ public class NavigationController {
         );
     }
 
-    @PostMapping("/update")
+    @PutMapping
     ResponseEntity<Object> updateNavigation(
-            @RequestBody @Valid NavigationDto navigationDto,
-            @RequestParam(name = "uuid") UUID id) {
-        navigationService.deleteNavigation(id);
-        return responseMappings.getSuccessMessage(navigationService.createNavigation(navigationDto));
+            @RequestBody @Valid NavigationDto data,
+            @RequestParam(name = "uuid", required = false) UUID id) {
+        if (id != null) {
+            navigationService.deleteNavigation(id);
+            return responseMappings.getSuccessMessage(navigationService.createNavigation(data));
+        }
+        return this.createNavigation(data);
     }
 
     @DeleteMapping("/delete")
