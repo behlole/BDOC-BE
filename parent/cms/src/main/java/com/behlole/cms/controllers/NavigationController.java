@@ -1,6 +1,8 @@
 package com.behlole.cms.controllers;
 
 import com.behlole.cms.dto.NavigationDto;
+import com.behlole.cms.dto.UpdateNavigationDto;
+import com.behlole.cms.mappings.NavigationMappings;
 import com.behlole.cms.service.NavigationService;
 import com.behlole.cms.utilities.ResponseMappings;
 import jakarta.validation.Valid;
@@ -43,13 +45,9 @@ public class NavigationController {
 
     @PutMapping
     ResponseEntity<Object> updateNavigation(
-            @RequestBody @Valid NavigationDto data,
-            @RequestParam(name = "uuid", required = false) UUID id) {
-        if (id != null) {
-            navigationService.deleteNavigation(id);
-            return responseMappings.getSuccessMessage(navigationService.createNavigation(data));
-        }
-        return this.createNavigation(data);
+            @RequestBody @Valid UpdateNavigationDto data,
+            @RequestParam(name = "uuid") UUID uuid) {
+        return responseMappings.getSuccessMessage(navigationService.updateNavigation(data, uuid));
     }
 
     @DeleteMapping("/delete")
