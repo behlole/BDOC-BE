@@ -4,13 +4,11 @@ import com.behlole.cms.dto.NavigationDto;
 import com.behlole.cms.service.NavigationService;
 import com.behlole.cms.utilities.ResponseMappings;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 @RestController
