@@ -2,7 +2,6 @@ package com.behlole.cms.controllers;
 
 import com.behlole.cms.dto.NavigationDto;
 import com.behlole.cms.dto.UpdateNavigationDto;
-import com.behlole.cms.mappings.NavigationMappings;
 import com.behlole.cms.service.NavigationService;
 import com.behlole.cms.utilities.ResponseMappings;
 import jakarta.validation.Valid;

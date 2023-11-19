@@ -3,7 +3,6 @@ package com.behlole.cms.service;
 import com.behlole.cms.dto.NavigationDto;
 import com.behlole.cms.dto.UpdateNavigationDto;
 import com.behlole.cms.exceptions.ResourceNotFoundException;
-import com.behlole.cms.mappings.NavigationMappings;
 import com.behlole.cms.models.Navigation;
 import com.behlole.cms.repository.NavigationRepository;
 import org.modelmapper.ModelMapper;
@@ -20,9 +19,6 @@ public class NavigationService {
     ModelMapper modelMapper;
     @Autowired
     NavigationRepository navigationRepository;
-
-    @Autowired
-    NavigationMappings navigationMappings;
 
     public List<NavigationDto> getNavigationList() {
         List<Navigation> navigationList = navigationRepository.findByIsParent(true).orElseThrow();
@@ -62,9 +58,19 @@ public class NavigationService {
 
     public NavigationDto updateNavigation(UpdateNavigationDto updateNavigationDto, UUID uuid) {
         Navigation navigation = navigationRepository.findByUuid(uuid).orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", uuid));
-        navigationMappings.updateNavigationFromDto(updateNavigationDto, navigation);
-        navigationRepository.saveAndFlush(navigation);
-        return modelMapper.map(navigation, NavigationDto.class);
+        modelMapper.map(updateNavigationDto, navigation);
+
+        List<UUID> alluuids = new ArrayList<>();
+        updateNavigationDto.getChildren().forEach((children) -> {
+            alluuids.add(UUID.fromString(String.valueOf(children)));
+        });
+
+        List<Navigation> childrenNavigation = navigationRepository.findAllByUuidIn(alluuids).orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", uuid));
+        navigation.setChildren(childrenNavigation);
+        deleteNavigation(uuid);
+        return createNavigation(modelMapper.map(navigation,NavigationDto.class));
+//        navigationRepository.saveAndFlush(navigation);
+//        return modelMapper.map(navigation, NavigationDto.class);
     }
 
     public void deleteNavigation(UUID id) {

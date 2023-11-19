@@ -18,6 +18,7 @@ public class UpdateNavigationDto {
     private String icon;
     private String link;
     private Boolean exactMatch;
-    private List<NavigationDto> children;
+    private List<String> children;
     private UUID parentId;
+
 }
