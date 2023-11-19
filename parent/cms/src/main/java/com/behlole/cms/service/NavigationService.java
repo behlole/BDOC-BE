@@ -60,21 +60,18 @@ public class NavigationService {
         Navigation navigation = navigationRepository.findByUuid(uuid).orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", uuid));
         modelMapper.map(updateNavigationDto, navigation);
 
-        List<UUID> alluuids = new ArrayList<>();
+        List<UUID> allUuids = new ArrayList<>();
         updateNavigationDto.getChildren().forEach((children) -> {
-            alluuids.add(UUID.fromString(String.valueOf(children)));
+            allUuids.add(UUID.fromString(children));
         });
-
-        List<Navigation> childrenNavigation = navigationRepository.findAllByUuidIn(alluuids).orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", uuid));
+        navigation.setUuid(uuid);
+        List<Navigation> childrenNavigation = navigationRepository.findAllByUuidIn(allUuids).orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", uuid));
         navigation.setChildren(childrenNavigation);
-        deleteNavigation(uuid);
-        return createNavigation(modelMapper.map(navigation,NavigationDto.class));
-//        navigationRepository.saveAndFlush(navigation);
-//        return modelMapper.map(navigation, NavigationDto.class);
+        navigationRepository.saveAndFlush(navigation);
+        return modelMapper.map(navigation, NavigationDto.class);
     }
 
     public void deleteNavigation(UUID id) {
-        System.out.println(id);
         navigationRepository.delete(
                 navigationRepository.findByUuid(id).orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", id))
         );
