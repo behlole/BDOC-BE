@@ -42,8 +42,17 @@ public class NavigationService {
         if (navigationDto.getIsParent() == null) {
             navigationDto.setIsParent(false);
         }
-
         Navigation navigation = navigationRepository.saveAndFlush(modelMapper.map(navigationDto, Navigation.class));
+        if (navigationDto.getParentId() != null) {
+            Navigation parentNavigation = navigationRepository.findByUuid(
+                            UUID.fromString(String.valueOf(navigationDto.getParentId()
+                                    )
+                            )
+                    )
+                    .orElseThrow(() -> new ResourceNotFoundException("navigation", "uuid", navigationDto.getParentId()));
+            parentNavigation.getChildren().add(navigation);
+            navigationRepository.saveAndFlush(parentNavigation);
+        }
         if (navigation.getChildren() != null) {
             List<Navigation> savedChildren = new ArrayList<>();
             navigation.getChildren().forEach(singleChildren -> {
