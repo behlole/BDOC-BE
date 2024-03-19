@@ -45,7 +45,6 @@ public class DoctorController {
         /**
          * Assign Categories to Doctor
          */
-
         doctorDto.setCategories(categoryService.createCategories(doctorDto.getCategories()));
         DoctorDto savedDoctorDto = doctorService.createDoctor(modelMapper.map(doctorDto, DoctorDto.class));
 
