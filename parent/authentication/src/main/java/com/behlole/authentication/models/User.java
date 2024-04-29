@@ -3,6 +3,8 @@ package com.behlole.authentication.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @Builder
@@ -10,7 +12,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Authentication {
+public class User {
     @Id
     @SequenceGenerator(
             name = "authentication_id_sequence",
@@ -20,7 +22,7 @@ public class Authentication {
             strategy = GenerationType.SEQUENCE,
             generator = "authentication_id_sequence"
     )
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;
